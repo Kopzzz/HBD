@@ -84,7 +84,7 @@ os.system('cls' if os.name == 'nt' else 'clear')
 
 try:
     pcode()
-    Thread(target = pAudio).start()
+    #Thread(target = pAudio).start()
     Thread(target = pprint, args=(art.mainArt,speed)).start()
     input()
 
