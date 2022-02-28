@@ -1,10 +1,8 @@
-#!/usr/bin/python3
-
 import os,random
 from threading import Thread
 from time import sleep
 
-import vlc
+import playsound
 from termcolor import colored
 
 from config import *
@@ -56,7 +54,7 @@ def pprint(art,time):
                 colorAttribute = []
             # Random color if R
             elif art[i] == '®':
-            	color_used = color
+                color_used = color
             else:
                 color_used = [colorCodes[art[i]]]
                 
@@ -64,8 +62,7 @@ def pprint(art,time):
 
 def pAudio():
     if playAudio:
-        p = vlc.MediaPlayer(resource_path(audio))
-        p.play()
+        playsound.playsound(resource_path(audio), True)
 
 # Code reader
 with open(resource_path(__file__)) as f_in:
