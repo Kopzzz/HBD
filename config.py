@@ -1,16 +1,19 @@
 # Specify which file (without .py extension) in the arts folder should be used
-#artFile = "example"
 artFile = "artwithstars"
 #artFile = "test"
+
 # Speed of art
-speed = 0.001
+speed = 0.004 #0.004
+
 # Print code in the beginning
 codePrint = False
 codingSpeed = 0.001
 codeColor='red'
+
 # Audio
 playAudio = True
 audio = 'HappyBirthday.mp3'
+
 # Random color is choosen from the list
 color = ['red','green','yellow','blue','magenta','cyan','white']
 # Change the keys of the dict to change the color codes

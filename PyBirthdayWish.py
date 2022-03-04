@@ -62,6 +62,7 @@ def pprint(art,time):
 
 def pAudio():
     if playAudio:
+        pass
         playsound.playsound(resource_path(audio), True)
 
 # Code reader
@@ -84,7 +85,7 @@ os.system('cls' if os.name == 'nt' else 'clear')
 
 try:
     pcode()
-    #Thread(target = pAudio).start()
+    Thread(target = pAudio).start()
     Thread(target = pprint, args=(art.mainArt,speed)).start()
     input()
 
