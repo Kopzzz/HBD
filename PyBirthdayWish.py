@@ -7,21 +7,47 @@ from termcolor import colored
 
 from config import *
 
+import numpy as np
+from PIL import Image
+
+def get_ansi_color_code(r, g, b):
+    if r == g and g == b:
+        if r < 8:
+            return 16
+        if r > 248:
+            return 231
+        return round(((r - 8) / 247) * 24) + 232
+    return 16 + (36 * round(r / 255 * 5)) + (6 * round(g / 255 * 5)) + round(b / 255 * 5)
+
+
+def get_color(r, g, b):
+    return "\x1b[48;5;{}m \x1b[0m".format(int(get_ansi_color_code(r,g,b)))
+
+
+def show_image(img_path):
+	try:
+		img = Image.open(img_path)
+	except FileNotFoundError:
+		exit('Image not found.')
+
+	h = 50
+	w = 120
+
+	img = img.resize((w,h), Image.ANTIALIAS)
+	img_arr = np.asarray(img)
+	h,w,c = img_arr.shape 
+	for x in range(h):
+		print(" "*12,end='')
+		for y in range(w):
+			pix = img_arr[x][y]
+			print(get_color(pix[0], pix[1], pix[2]), sep='', end='')
+		print()
+		sleep(0.15)
+
 # Importing module specified in the config file
 art = __import__(f'arts.{artFile}', globals(), locals(), ['*'])
 
 def replaceMultiple(mainString, toBeReplace, newString):
-    """[Replace a set of multiple sub strings with a new string]
-
-    Args:
-        mainString ([string]): [String in which the replacement will be done]
-        toBeReplace ([list]): [A list which elements will be replaced by a newString]
-        newString ([string]): [A string which will be replaced in place of elements of toBeReplace]
-
-    Returns:
-        [string]: [Return the main string where the element of toBeReplace is replaced by newString]
-    """
-
     # Iterate over the list to be replaced
     for elem in toBeReplace :
         # Check if the element is in the main string
@@ -42,6 +68,7 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 def pprint(art,time):
+    
     color_used = [random.choice(color)]
     colorAttribute = []
     for i in range(len(art)):
@@ -59,10 +86,10 @@ def pprint(art,time):
                 color_used = [colorCodes[art[i]]]
                 
         print(colored(replaceMultiple(art[i],colorCodes,''),random.choice(color_used),attrs=colorAttribute),sep='', end='',flush= True);sleep(time)
+    show_image('./pic/km.jpg') 
 
 def pAudio():
     if playAudio:
-        pass
         playsound.playsound(resource_path(audio), True)
 
 # Code reader
